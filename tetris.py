@@ -22,10 +22,20 @@ GREEN  = (0,255,0)
 BLUE   = (0,0,255)
 
 
+class Piece(pygame.sprite.Sprite):
+    
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.Surface((20, 20))
+        self.image.fill(WHITE)
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (0, 0)
+
+
+
+
 def game_over():
     global state
-
-
 
     menu_x = WIDTH / 2 - 100
     menu_y = HEIGHT / 2 - 40
@@ -91,7 +101,8 @@ state = RUN
 
 # Create Sprites
 all_sprites = pygame.sprite.Group()
-# all_sprites.add()
+piece = Piece()
+all_sprites.add(piece)
 
 
 
