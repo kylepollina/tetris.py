@@ -2,7 +2,7 @@
 # Author: Kyle Pollina
 import pygame
 import random
-
+import block
 
 # Define constants
 WIDTH  = 360
@@ -21,17 +21,14 @@ RED    = (255,0,0)
 GREEN  = (0,255,0)
 BLUE   = (0,0,255)
 
-
-class Piece(pygame.sprite.Sprite):
-    
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((20, 20))
-        self.image.fill(WHITE)
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (0, 0)
-
-
+# Define block types
+SQUARE = 0
+LINE   = 1
+TBLOCK = 2
+ZBLOCK = 3
+SBLOCK = 4
+JBLOCK = 5
+LBLOCK = 6
 
 
 def game_over():
@@ -88,6 +85,8 @@ def create_text(text, color, background):
     textsurface = font.render(text, True, color, background)
     return textsurface, textsurface.get_rect()
 
+
+
 # Initialize pygame and create window
 pygame.init()
 pygame.mixer.init()
@@ -99,9 +98,10 @@ font = pygame.font.SysFont(None, 20)
 clock = pygame.time.Clock()
 state = RUN
 
+
 # Create Sprites
 all_sprites = pygame.sprite.Group()
-piece = Piece()
+block = block(SQUARE)
 all_sprites.add(piece)
 
 
