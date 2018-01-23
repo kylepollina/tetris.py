@@ -31,6 +31,16 @@ JBLOCK = 5
 LBLOCK = 6
 
 
+class block(pygame.sprite.Sprite):
+    
+    def __init__(self, block_type):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.Surface((20, 20))
+        self.image.fill(GREEN)
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (HEIGHT / 2, WIDTH / 2)
+
+
 def game_over():
     global state
 
@@ -102,13 +112,10 @@ state = RUN
 # Create Sprites
 all_sprites = pygame.sprite.Group()
 block = block(SQUARE)
-all_sprites.add(piece)
-
-
+all_sprites.add(block)
 
 running = True
 while running:
-
 
     if state == GAME_OVER:
         game_over()
