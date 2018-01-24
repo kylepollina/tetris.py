@@ -2,17 +2,15 @@
 # Author: Kyle Pollina
 import pygame
 import random
-import block
 
 # Define constants
-WIDTH  = 360
-HEIGHT = 360
-FPS    = 12
+WIDTH  = 20*20
+HEIGHT = 20*30
+FPS    = 30
 
 GAME_OVER = 0
 RUN = 1
 PAUSE = 2
-
 
 # Define colors
 WHITE  = (255,255,255)
@@ -31,6 +29,7 @@ JBLOCK = 5
 LBLOCK = 6
 
 
+# Classes
 class block(pygame.sprite.Sprite):
     
     def __init__(self, block_type):
@@ -41,7 +40,9 @@ class block(pygame.sprite.Sprite):
         self.rect.topleft = (HEIGHT / 2, WIDTH / 2)
 
 
+# Game methods
 def game_over():
+
     global state
 
     menu_x = WIDTH / 2 - 100
@@ -97,6 +98,8 @@ def create_text(text, color, background):
 
 
 
+
+# MAIN GAME CODE
 # Initialize pygame and create window
 pygame.init()
 pygame.mixer.init()
@@ -104,22 +107,16 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Tetris")
 pygame.font.init()
 font = pygame.font.SysFont(None, 20)
-
 clock = pygame.time.Clock()
-state = RUN
 
 
 # Create Sprites
 all_sprites = pygame.sprite.Group()
-block = block(SQUARE)
-all_sprites.add(block)
+# all_sprites.add(block)
 
 running = True
 while running:
-
-    if state == GAME_OVER:
-        game_over()
-
+    
     # Process input (events)
     for event in pygame.event.get():
         # check for closing the window
