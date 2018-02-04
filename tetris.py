@@ -174,6 +174,14 @@ class Block:
     def update(self):
         for square in self.squares:
             square.rect.top += 20
+
+    def move_left(self):
+        for square in self.squares:
+            square.rect.left -= 20
+
+    def move_right(self):
+        for square in self.squares:
+            square.rect.left += 20
     
 
 # Game methods
@@ -261,6 +269,14 @@ while running:
         # check for closing the window
         if event.type == pygame.QUIT:
             running = False
+
+        # check key pressed
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT:
+                block.move_right()
+            if event.key == pygame.K_LEFT:
+                block.move_left()
+                
 
     # Update
     if time % speed == 0:
