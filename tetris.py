@@ -171,6 +171,10 @@ class Block:
 
         all_sprites.add(self.square1, self.square2, self.square3, self.square4)
 
+    def update(self):
+        for square in self.squares:
+            square.rect.top += 20
+    
 
 # Game methods
 def game_over():
@@ -221,7 +225,7 @@ def game_over():
             text, textrect = create_text('Quit', WHITE, BLACK)
             screen.blit(text, (menu_x + (170 - textrect.right), HEIGHT / 2))
                 
-        pygame.display.update()
+        block.update()
         clock.tick(FPS)  
 
 def create_text(text, color, background):
@@ -246,6 +250,9 @@ clock = pygame.time.Clock()
 all_sprites = pygame.sprite.Group()
 block = Block(LBLOCK)
 
+time = 0
+speed = 10
+
 running = True
 while running:
     
@@ -256,10 +263,14 @@ while running:
             running = False
 
     # Update
-    all_sprites.update()
+    if time % speed == 0:
+        block.update()
+        time = 0
 
     # keep loop running at the right speed
     clock.tick(FPS)
+    time += 1
+
     
     # Draw / render
     screen.fill(BLACK)

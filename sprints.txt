@@ -1,5 +1,9 @@
 Tetris sprints
 
-draw a single square
-draw a block
-draw all blocks
+/* draw a single square */
+/* draw a block */
+/* draw all blocks */
+add update method to move blocks downwards
+enable keyboard controls to move blocks left and right
+
+
