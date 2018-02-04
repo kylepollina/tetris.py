@@ -176,12 +176,34 @@ class Block:
             square.rect.top += 20
 
     def move_left(self):
-        for square in self.squares:
-            square.rect.left -= 20
+        if self.get_left() > 0:
+            for square in self.squares:
+                square.rect.left -= 20
 
     def move_right(self):
+        if self.get_right() < WIDTH:
+            for square in self.squares:
+                square.rect.left += 20
+
+
+    # gets the farthest left block x value
+    def get_left(self):
+        self.left = self.squares[0].rect.left
         for square in self.squares:
-            square.rect.left += 20
+            if square.rect.left <= self.left:
+                self.left = square.rect.left
+
+        return self.left
+            
+
+    # gets the farthest right block x value
+    def get_right(self):
+        self.right = self.squares[0].rect.right
+        for square in self.squares:
+            if square.rect.right >= self.right:
+                self.right = square.rect.right
+
+        return self.right
     
 
 # Game methods
@@ -259,7 +281,7 @@ all_sprites = pygame.sprite.Group()
 block = Block(LBLOCK)
 
 time = 0
-speed = 10
+speed = 15
 
 running = True
 while running:
@@ -270,13 +292,13 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-        # check key pressed
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT:
-                block.move_right()
-            if event.key == pygame.K_LEFT:
-                block.move_left()
-                
+    # check key pressed
+    if time % 3 == 0:
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            block.move_left()
+        if keys[pygame.K_RIGHT]:
+            block.move_right()
 
     # Update
     if time % speed == 0:
