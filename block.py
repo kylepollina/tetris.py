@@ -49,113 +49,69 @@ class Block:
     block_type = 0
 
     def __init__(self, block_type, all_sprites):
-        self.block_type = block_type
-   
-        if self.block_type == SQUARE:
-            self.square1 = Square(YELLOW)
-            self.square2 = Square(YELLOW)
-            self.square3 = Square(YELLOW)
-            self.square4 = Square(YELLOW)
+        
+        self.color = BLACK
+        
+        if block_type == SQUARE:
+            self.color = YELLOW
+        if block_type == LINE:
+            self.color = CYAN
+        if block_type == TBLOCK:
+            self.color = PURPLE
+        if block_type == ZBLOCK:
+            self.color = RED
+        if block_type == SBLOCK:
+            self.color = GREEN
+        if block_type == LBLOCK:
+            self.color = ORANGE
+        if block_type == JBLOCK:
+            self.color = BLUE
+        
+  
+        self.square1 = Square(self.color)
+        self.square2 = Square(self.color)
+        self.square3 = Square(self.color)
+        self.square4 = Square(self.color)
 
+        if block_type == SQUARE:
             self.square2.rect.left += 20
             self.square3.rect.top  += 20
             self.square4.rect.left += 20
             self.square4.rect.top  += 20
 
-            self.squares.append(self.square1) 
-            self.squares.append(self.square2) 
-            self.squares.append(self.square3) 
-            self.squares.append(self.square4) 
-
-        if self.block_type == LINE:
-            self.square1 = Square(CYAN)
-            self.square2 = Square(CYAN)
-            self.square3 = Square(CYAN)
-            self.square4 = Square(CYAN)
-
+        if block_type == LINE:
             self.square2.rect.top  += 20
             self.square3.rect.top  += 40
             self.square4.rect.top  += 60
 
-            self.squares.append(self.square1) 
-            self.squares.append(self.square2) 
-            self.squares.append(self.square3) 
-            self.squares.append(self.square4) 
-
-        if self.block_type == TBLOCK:
-            self.square1 = Square(PURPLE)
-            self.square2 = Square(PURPLE)
-            self.square3 = Square(PURPLE)
-            self.square4 = Square(PURPLE)
-
+        if block_type == TBLOCK:
             self.square2.rect.top  += 20
             self.square3.rect.top  += 20
             self.square3.rect.left += 20
             self.square4.rect.top  += 40
-
-            self.squares.append(self.square1) 
-            self.squares.append(self.square2) 
-            self.squares.append(self.square3) 
-            self.squares.append(self.square4) 
             
-        if self.block_type == ZBLOCK:
-            self.square1 = Square(RED)
-            self.square2 = Square(RED)
-            self.square3 = Square(RED)
-            self.square4 = Square(RED)
-
+        if block_type == ZBLOCK:
             self.square2.rect.left  += 20
             self.square3.rect.top   += 20
             self.square3.rect.left  += 20
             self.square4.rect.top   += 20
             self.square4.rect.left  += 40
-
-            self.squares.append(self.square1) 
-            self.squares.append(self.square2) 
-            self.squares.append(self.square3) 
-            self.squares.append(self.square4) 
             
-        if self.block_type == SBLOCK:
-            self.square1 = Square(GREEN)
-            self.square2 = Square(GREEN)
-            self.square3 = Square(GREEN)
-            self.square4 = Square(GREEN)
-
+        if block_type == SBLOCK:
             self.square1.rect.top   += 20
             self.square2.rect.left  += 20
             self.square3.rect.top   += 20
             self.square3.rect.left  += 20
             self.square4.rect.left  += 40
 
-            self.squares.append(self.square1) 
-            self.squares.append(self.square2) 
-            self.squares.append(self.square3) 
-            self.squares.append(self.square4) 
-
-        if self.block_type == JBLOCK:
-            self.square1 = Square(BLUE)
-            self.square2 = Square(BLUE)
-            self.square3 = Square(BLUE)
-            self.square4 = Square(BLUE)
-
+        if block_type == JBLOCK:
             self.square2.rect.top   += 20
             self.square3.rect.top   += 20
             self.square3.rect.left  += 20
             self.square4.rect.top   += 20
             self.square4.rect.left  += 40
 
-
-            self.squares.append(self.square1) 
-            self.squares.append(self.square2) 
-            self.squares.append(self.square3) 
-            self.squares.append(self.square4) 
-
-        if self.block_type == LBLOCK:
-            self.square1 = Square(ORANGE)
-            self.square2 = Square(ORANGE)
-            self.square3 = Square(ORANGE)
-            self.square4 = Square(ORANGE)
-
+        if block_type == LBLOCK:
             self.square1.rect.top   += 20
             self.square2.rect.top   += 20
             self.square2.rect.left  += 40
@@ -163,12 +119,14 @@ class Block:
             self.square3.rect.left  += 20
             self.square4.rect.left  += 40
 
-            self.squares.append(self.square1) 
-            self.squares.append(self.square2) 
-            self.squares.append(self.square3) 
-            self.squares.append(self.square4) 
+        self.squares.append(self.square1) 
+        self.squares.append(self.square2) 
+        self.squares.append(self.square3) 
+        self.squares.append(self.square4) 
 
         all_sprites.add(self.square1, self.square2, self.square3, self.square4)
+
+
 
     def update(self):
         for square in self.squares:
