@@ -50,12 +50,6 @@ class Block:
 
     def __init__(self, block_type, all_sprites):
         self.block_type = block_type
-
-        if self.block_type == SQUARE:
-            self.color = YELLOW
-        if self.block_type == LINE:
-            self.color = YELLOW
-        
    
         if self.block_type == SQUARE:
             self.square1 = Square(YELLOW)
