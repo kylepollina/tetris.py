@@ -44,9 +44,10 @@ class Square(pygame.sprite.Sprite):
     def __init__(self, color):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((20, 20))
-        self.image.fill(color)
         self.rect = self.image.get_rect()
         self.rect.topleft = (BOARDLEFT, BOARDTOP)
+
+        pygame.draw.rect(self.image, color, (1, 1, 18, 18), 0)
 
 class Block:
     squares = []
