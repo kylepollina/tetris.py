@@ -4,13 +4,15 @@ import pygame
 import random
 
 # Define constants
-WIDTH      = 20*20
-HEIGHT     = 20*30
-BOARDLEFT  = 5*20
-BOARDRIGHT = 15*20
-BOARDTOP   = 5*20
-BOARDBOT   = 25*20
-FPS        = 30
+WIDTH       = 20*20
+HEIGHT      = 20*30
+BOARDWIDTH  = 20*10
+BOARDHEIGHT = 20*20
+BOARDLEFT   = 5*20
+BOARDRIGHT  = 15*20
+BOARDTOP    = 5*20
+BOARDBOT    = 25*20
+FPS         = 30
 
 GAME_OVER = 0
 RUN = 1
@@ -305,9 +307,9 @@ while running:
     # check key pressed
     if speed_timer % 3 == 0:
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_a]:
             block.move_left()
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_d]:
             block.move_right()
 
     # Update - the smaller 'speed' is, the faster the blocks will move downwards
@@ -323,7 +325,7 @@ while running:
     
     # Draw / render
     screen.fill(BLACK)
-    pygame.draw.rect(screen, WHITE, (5*20, 5*20, 10*20, 20*20), 2)
+    pygame.draw.rect(screen, WHITE, (BOARDLEFT - 2, BOARDTOP - 2, BOARDWIDTH + 4, BOARDHEIGHT + 4), 1)
     all_sprites.draw(screen)
 
     # after drawing everything, flip the display
