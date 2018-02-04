@@ -4,6 +4,14 @@ Tetris sprints
 /* draw a block */
 /* draw all blocks */
 /* add update method to move blocks downwards */
-enable keyboard controls to move blocks left and right
+/* enable keyboard controls to move blocks left and right */
+/* make border for actual screen size, not window size */
+make boarder better looking
+make blocks stop moving when they hit the bottom
+better key hold functionality
+stop blocks at bottom
+create new block when original block stops moving
+stop blocks if they hit another block
+
 
 

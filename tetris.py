@@ -4,9 +4,13 @@ import pygame
 import random
 
 # Define constants
-WIDTH  = 20*20
-HEIGHT = 20*30
-FPS    = 30
+WIDTH      = 20*20
+HEIGHT     = 20*30
+BOARDLEFT  = 5*20
+BOARDRIGHT = 15*20
+BOARDTOP   = 5*20
+BOARDBOT   = 25*20
+FPS        = 30
 
 GAME_OVER = 0
 RUN = 1
@@ -35,17 +39,14 @@ LBLOCK = 6
 
 # Classes
 class Square(pygame.sprite.Sprite):
-    
     def __init__(self, color):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((20, 20))
         self.image.fill(color)
         self.rect = self.image.get_rect()
-        self.rect.topleft = (0,0)
-
+        self.rect.topleft = (BOARDLEFT, BOARDTOP)
 
 class Block:
-
     squares = []
     block_type = 0
 
@@ -176,12 +177,12 @@ class Block:
             square.rect.top += 20
 
     def move_left(self):
-        if self.get_left() > 0:
+        if self.get_left() > BOARDLEFT:
             for square in self.squares:
                 square.rect.left -= 20
 
     def move_right(self):
-        if self.get_right() < WIDTH:
+        if self.get_right() < BOARDRIGHT:
             for square in self.squares:
                 square.rect.left += 20
 
@@ -204,11 +205,19 @@ class Block:
                 self.right = square.rect.right
 
         return self.right
+
+    # gets the lowest blocks bottom value
+    def get_bottom(self):
+        self.bottom = self.squares[0].rect.bottom
+        for square in self.squares:
+            if square.rect.bottom >= self.bottom:
+                self.bottom = square.rect.bottom
+
+        return self.bottom
     
 
 # Game methods
 def game_over():
-
     global state
 
     menu_x = WIDTH / 2 - 100
@@ -275,12 +284,13 @@ pygame.font.init()
 font = pygame.font.SysFont(None, 20)
 clock = pygame.time.Clock()
 
+screen.fill(BLACK)
 
 # Create Sprites
 all_sprites = pygame.sprite.Group()
 block = Block(LBLOCK)
 
-time = 0
+speed_timer = 0
 speed = 15
 
 running = True
@@ -293,25 +303,27 @@ while running:
             running = False
 
     # check key pressed
-    if time % 3 == 0:
+    if speed_timer % 3 == 0:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             block.move_left()
         if keys[pygame.K_RIGHT]:
             block.move_right()
 
-    # Update
-    if time % speed == 0:
-        block.update()
-        time = 0
+    # Update - the smaller 'speed' is, the faster the blocks will move downwards
+    if block.get_bottom() < BOARDBOT:
+        if speed_timer % speed == 0:
+            block.update()
+            speed_timer = 0
 
     # keep loop running at the right speed
     clock.tick(FPS)
-    time += 1
+    speed_timer += 1
 
     
     # Draw / render
     screen.fill(BLACK)
+    pygame.draw.rect(screen, WHITE, (5*20, 5*20, 10*20, 20*20), 2)
     all_sprites.draw(screen)
 
     # after drawing everything, flip the display
