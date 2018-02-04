@@ -313,6 +313,13 @@ while running:
         if keys[pygame.K_d]:
             block.move_right()
 
+
+
+
+
+
+
+
     # Update - the smaller 'speed' is, the faster the blocks will move downwards
     if block.get_bottom() < BOARDBOT:
         if speed_timer % speed == 0:
