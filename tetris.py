@@ -18,6 +18,10 @@ BLACK  = (0,0,0)
 RED    = (255,0,0)
 GREEN  = (0,255,0)
 BLUE   = (0,0,255)
+YELLOW = (255,255,0)
+CYAN   = (0,255,255)
+PURPLE = (255,0,255)
+ORANGE = (255,140,0)
 
 # Define block types
 SQUARE = 0
@@ -30,14 +34,142 @@ LBLOCK = 6
 
 
 # Classes
-class block(pygame.sprite.Sprite):
+class Square(pygame.sprite.Sprite):
     
-    def __init__(self, block_type):
+    def __init__(self, color):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((20, 20))
-        self.image.fill(GREEN)
+        self.image.fill(color)
         self.rect = self.image.get_rect()
-        self.rect.topleft = (HEIGHT / 2, WIDTH / 2)
+        self.rect.topleft = (0,0)
+
+
+class Block:
+
+    squares = []
+    block_type = 0
+
+    def __init__(self, block_type):
+        self.block_type = block_type
+   
+        if self.block_type == SQUARE:
+            self.square1 = Square(YELLOW)
+            self.square2 = Square(YELLOW)
+            self.square3 = Square(YELLOW)
+            self.square4 = Square(YELLOW)
+
+            self.square2.rect.left += 20
+            self.square3.rect.top  += 20
+            self.square4.rect.left += 20
+            self.square4.rect.top  += 20
+
+            self.squares.append(self.square1) 
+            self.squares.append(self.square2) 
+            self.squares.append(self.square3) 
+            self.squares.append(self.square4) 
+
+        if self.block_type == LINE:
+            self.square1 = Square(CYAN)
+            self.square2 = Square(CYAN)
+            self.square3 = Square(CYAN)
+            self.square4 = Square(CYAN)
+
+            self.square2.rect.top  += 20
+            self.square3.rect.top  += 40
+            self.square4.rect.top  += 60
+
+            self.squares.append(self.square1) 
+            self.squares.append(self.square2) 
+            self.squares.append(self.square3) 
+            self.squares.append(self.square4) 
+
+        if self.block_type == TBLOCK:
+            self.square1 = Square(PURPLE)
+            self.square2 = Square(PURPLE)
+            self.square3 = Square(PURPLE)
+            self.square4 = Square(PURPLE)
+
+            self.square2.rect.top  += 20
+            self.square3.rect.top  += 20
+            self.square3.rect.left += 20
+            self.square4.rect.top  += 40
+
+            self.squares.append(self.square1) 
+            self.squares.append(self.square2) 
+            self.squares.append(self.square3) 
+            self.squares.append(self.square4) 
+            
+        if self.block_type == ZBLOCK:
+            self.square1 = Square(RED)
+            self.square2 = Square(RED)
+            self.square3 = Square(RED)
+            self.square4 = Square(RED)
+
+            self.square2.rect.left  += 20
+            self.square3.rect.top   += 20
+            self.square3.rect.left  += 20
+            self.square4.rect.top   += 20
+            self.square4.rect.left  += 40
+
+            self.squares.append(self.square1) 
+            self.squares.append(self.square2) 
+            self.squares.append(self.square3) 
+            self.squares.append(self.square4) 
+            
+        if self.block_type == SBLOCK:
+            self.square1 = Square(GREEN)
+            self.square2 = Square(GREEN)
+            self.square3 = Square(GREEN)
+            self.square4 = Square(GREEN)
+
+            self.square1.rect.top   += 20
+            self.square2.rect.left  += 20
+            self.square3.rect.top   += 20
+            self.square3.rect.left  += 20
+            self.square4.rect.left  += 40
+
+            self.squares.append(self.square1) 
+            self.squares.append(self.square2) 
+            self.squares.append(self.square3) 
+            self.squares.append(self.square4) 
+
+        if self.block_type == JBLOCK:
+            self.square1 = Square(BLUE)
+            self.square2 = Square(BLUE)
+            self.square3 = Square(BLUE)
+            self.square4 = Square(BLUE)
+
+            self.square2.rect.top   += 20
+            self.square3.rect.top   += 20
+            self.square3.rect.left  += 20
+            self.square4.rect.top   += 20
+            self.square4.rect.left  += 40
+
+
+            self.squares.append(self.square1) 
+            self.squares.append(self.square2) 
+            self.squares.append(self.square3) 
+            self.squares.append(self.square4) 
+
+        if self.block_type == LBLOCK:
+            self.square1 = Square(ORANGE)
+            self.square2 = Square(ORANGE)
+            self.square3 = Square(ORANGE)
+            self.square4 = Square(ORANGE)
+
+            self.square1.rect.top   += 20
+            self.square2.rect.top   += 20
+            self.square2.rect.left  += 40
+            self.square3.rect.top   += 20
+            self.square3.rect.left  += 20
+            self.square4.rect.left  += 40
+
+            self.squares.append(self.square1) 
+            self.squares.append(self.square2) 
+            self.squares.append(self.square3) 
+            self.squares.append(self.square4) 
+
+        all_sprites.add(self.square1, self.square2, self.square3, self.square4)
 
 
 # Game methods
@@ -112,7 +244,7 @@ clock = pygame.time.Clock()
 
 # Create Sprites
 all_sprites = pygame.sprite.Group()
-# all_sprites.add(block)
+block = Block(LBLOCK)
 
 running = True
 while running:
