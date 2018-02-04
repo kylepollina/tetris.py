@@ -96,8 +96,9 @@ def create_text(text, color, background):
     textsurface = font.render(text, True, color, background)
     return textsurface, textsurface.get_rect()
 
-
-
+def rand_block(all_sprites):
+    block = Block(random.randint(0,6), all_sprites)
+    return block
 
 # MAIN GAME CODE
 # Initialize pygame and create window
@@ -113,7 +114,13 @@ screen.fill(BLACK)
 
 # Create Sprites
 all_sprites = pygame.sprite.Group()
-block = Block(LBLOCK, all_sprites)
+block = rand_block(all_sprites)
+
+
+
+
+
+
 
 speed_timer = 0
 speed = 15
