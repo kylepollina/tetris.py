@@ -134,13 +134,14 @@ speed = 10
 
 running = True
 while running:
+    cur_block = block_list[0]           # Current falling block
+
     # Process input (events)
     for event in pygame.event.get():
         # check for closing the window
         if event.type == pygame.QUIT:
             running = False
     
-    cur_block = block_list[0]
 
     # Check key pressed
     if speed_timer % 3 == 0:
@@ -155,10 +156,13 @@ while running:
 
     # Updates falling block
     if speed_timer % speed == 0:
-        # TODO write update code
+        collide = cur_block.check_collide()
+       
+        if not collide:
+            cur_block.move_down()
+        
 
-
-    # keep loop running at the right speed
+    # Keep loop running at the right speed
     clock.tick(FPS)
     speed_timer += 1
 
@@ -168,7 +172,7 @@ while running:
     pygame.draw.rect(screen, WHITE, (BOARDLEFT - 2, BOARDTOP - 2, BOARDWIDTH + 4, BOARDHEIGHT + 4), 1)
     all_sprites.draw(screen)
 
-    # after drawing everything, flip the display
+    # After drawing everything, flip the display
     pygame.display.flip()
 
 pygame.quit()

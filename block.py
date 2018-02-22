@@ -133,10 +133,14 @@ class Block:
 
 
 
-
-
-
+    def check_collide(self):
+        return False
         
+    
+    def move_down(self):
+        if self.get_bottom() < BOARDBOT:
+            for square in self.squares:
+                square.rect.top += 20
 
     def move_left(self):
         if self.get_left() > BOARDLEFT:
