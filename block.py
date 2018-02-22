@@ -134,8 +134,10 @@ class Block:
 
 
     def check_collide(self):
-        return False
-        
+        if self.get_bottom() + 20 >= BOARDBOT:
+            return True
+        else:
+            return False
     
     def move_down(self):
         if self.get_bottom() < BOARDBOT:
