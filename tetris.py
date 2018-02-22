@@ -3,6 +3,7 @@
 import pygame
 import random
 from block import Block
+from block import Deadsquares
 
 # Define constants
 WIDTH       = 20*20
@@ -121,10 +122,10 @@ screen.fill(BLACK)
 
 # Create Sprites
 all_sprites = pygame.sprite.Group()     # list of all currently displayed sprites
-deadsquares = pygame.sprite.Group()     # collided/dead squares
 
 block = rand_block(all_sprites)
 block_list = [block]
+deadsquares = Deadsquares()
 
 
 
@@ -157,7 +158,12 @@ while running:
     # Updates falling block
     if speed_timer % speed == 0:
         collide = cur_block.check_collide()
-       
+      
+        if collide:
+            block_list = block_list[1:]         # Removes first block from block_list
+            deadsquares.add_block(cur_block)          # Adds the current block to the deadsquares list
+            collide = False
+
         if not collide:
             cur_block.move_down()
         

@@ -134,7 +134,7 @@ class Block:
 
 
     def check_collide(self):
-        if self.get_bottom() + 20 >= BOARDBOT:
+        if self.get_bottom() >= BOARDBOT:
             return True
         else:
             return False
@@ -183,3 +183,13 @@ class Block:
 
         return self.bottom
     
+
+# All squares/blocks that have collided
+class Deadsquares:
+    block_list = []
+
+    def add_block(self, block):
+        for square in block.squares:
+            self.block_list.append(square)
+
+
