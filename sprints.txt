@@ -8,8 +8,7 @@ Tetris sprints
 /* make border for actual screen size, not window size */
 /* make boarder better looking */
 /* make blocks stop moving when they hit the bottom */
-random block generator
-
+/* random block generator */
 stop blocks at bottom
 create new block when original block stops moving
 stop blocks if they hit another block

@@ -40,8 +40,10 @@ JBLOCK = 5
 LBLOCK = 6
 
 
-
+##############################
 # Game methods
+##############################
+
 def game_over():
     global state
 
@@ -100,7 +102,12 @@ def rand_block(all_sprites):
     block = Block(random.randint(0,6), all_sprites)
     return block
 
-# MAIN GAME CODE
+
+
+##############################
+# Main game code 
+##############################
+
 # Initialize pygame and create window
 pygame.init()
 pygame.mixer.init()
@@ -113,47 +120,43 @@ clock = pygame.time.Clock()
 screen.fill(BLACK)
 
 # Create Sprites
-all_sprites = pygame.sprite.Group()
+all_sprites = pygame.sprite.Group()     # list of all currently displayed sprites
+deadsquares = pygame.sprite.Group()     # collided/dead squares
+
 block = rand_block(all_sprites)
-
-
-
+block_list = [block]
 
 
 
 
 speed_timer = 0
-speed = 15
+speed = 10
 
 running = True
 while running:
-    
     # Process input (events)
     for event in pygame.event.get():
         # check for closing the window
         if event.type == pygame.QUIT:
             running = False
+    
+    cur_block = block_list[0]
 
-    # check key pressed
+    # Check key pressed
     if speed_timer % 3 == 0:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]:
-            block.move_left()
+           cur_block.move_left()
         if keys[pygame.K_d]:
-            block.move_right()
+            cur_block.move_right()
 
 
 
 
+    # Updates falling block
+    if speed_timer % speed == 0:
+        # TODO write update code
 
-
-
-
-    # Update - the smaller 'speed' is, the faster the blocks will move downwards
-    if block.get_bottom() < BOARDBOT:
-        if speed_timer % speed == 0:
-            block.update()
-            speed_timer = 0
 
     # keep loop running at the right speed
     clock.tick(FPS)

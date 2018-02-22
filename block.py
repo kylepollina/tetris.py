@@ -33,7 +33,13 @@ CYAN   = (0,255,255)
 PURPLE = (255,0,255)
 ORANGE = (255,140,0)
 
-# Classes
+
+##############################
+# Classes 
+##############################
+
+
+# Individual square pieces that make up a block
 class Square(pygame.sprite.Sprite):
     def __init__(self, color):
         pygame.sprite.Sprite.__init__(self)
@@ -43,13 +49,12 @@ class Square(pygame.sprite.Sprite):
 
         pygame.draw.rect(self.image, color, (1, 1, 18, 18), 0)
 
-
+# Full block made up of 4 squares
 class Block:
     squares = []
     block_type = 0
 
     def __init__(self, block_type, all_sprites):
-        
         self.color = BLACK
         
         if block_type == SQUARE:
@@ -128,9 +133,10 @@ class Block:
 
 
 
-    def update(self):
-        for square in self.squares:
-            square.rect.top += 20
+
+
+
+        
 
     def move_left(self):
         if self.get_left() > BOARDLEFT:
