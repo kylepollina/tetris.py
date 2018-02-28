@@ -122,12 +122,12 @@ screen.fill(BLACK)
 # Create Sprites
 all_sprites = pygame.sprite.Group()     # list of all currently displayed sprites
 
-cur_block = Block(TBLOCK)
+cur_block = rand_block()
 cur_block.display(all_sprites)
 
-# next_block = Block(LINE)
-# next_block.set_next()
-# next_block.display(all_sprites)
+next_block = rand_block()
+next_block.set_next()
+next_block.display(all_sprites)
 
 deadsquares = Deadsquares()
 
@@ -175,8 +175,14 @@ while running:
     
     # Draw / render
     screen.fill(BLACK)
+
+    # Draws white outer box
     pygame.draw.rect(screen, WHITE, (BOARDLEFT - 2, BOARDTOP - 2, BOARDWIDTH + 4, BOARDHEIGHT + 4), 1)
-    all_sprites.draw(screen)
+    # Draws hold box
+    pygame.draw.rect(screen, WHITE, (BOARDRIGHT + 18, BOARDTOP - 2, 64, 84), 1)
+    all_sprites.draw(screen) 
+    text, textrect = create_text('NEXT', WHITE, BLACK)
+    screen.blit(text, (BOARDRIGHT + 30, BOARDTOP - 20))
 
     # After drawing everything, flip the display
     pygame.display.flip()

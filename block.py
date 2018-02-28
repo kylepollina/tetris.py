@@ -55,6 +55,7 @@ class Block:
     def __init__(self, block_type):
         self.color = BLACK
         self.squares = [0, 0, 0, 0]
+        self.block_type = block_type
         
         if block_type == SQUARE:
             self.color = YELLOW
@@ -138,7 +139,19 @@ class Block:
 
     def set_next(self):
         for square in self.squares:
-            square.rect.x += 100
+            square.rect.x += BOARDWIDTH + 20 
+
+            if self.block_type == LINE:
+                square.rect.x += 20
+            elif self.block_type == SQUARE:
+                square.rect.x += 10
+                square.rect.y += 20
+            elif self.block_type == TBLOCK:
+                square.rect.x += 10
+                square.rect.y += 10
+            else:
+                square.rect.y += 20
+
 
 
     def display(self, all_sprites):
