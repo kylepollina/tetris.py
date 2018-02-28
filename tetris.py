@@ -125,9 +125,9 @@ all_sprites = pygame.sprite.Group()     # list of all currently displayed sprite
 cur_block = Block(TBLOCK)
 cur_block.display(all_sprites)
 
-next_block = Block(LINE)
-next_block.set_next()
-next_block.display(all_sprites)
+# next_block = Block(LINE)
+# next_block.set_next()
+# next_block.display(all_sprites)
 
 deadsquares = Deadsquares()
 
