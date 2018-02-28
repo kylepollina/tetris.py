@@ -99,9 +99,8 @@ def create_text(text, color, background):
     textsurface = font.render(text, True, color, background)
     return textsurface, textsurface.get_rect()
 
-def rand_block(all_sprites):
-    block = Block(random.randint(0,6), all_sprites)
-    return block
+def rand_block():
+    return Block(random.randint(0,6))
 
 
 
@@ -123,19 +122,22 @@ screen.fill(BLACK)
 # Create Sprites
 all_sprites = pygame.sprite.Group()     # list of all currently displayed sprites
 
-block = rand_block(all_sprites)
-block_list = [block]
+cur_block = Block(TBLOCK)
+cur_block.display(all_sprites)
+
+next_block = Block(LINE)
+next_block.set_next()
+next_block.display(all_sprites)
+
 deadsquares = Deadsquares()
 
 
 
-
 speed_timer = 0
-speed = 10
+speed = 20
 
 running = True
 while running:
-    cur_block = block_list[0]           # Current falling block
 
     # Process input (events)
     for event in pygame.event.get():
@@ -160,11 +162,9 @@ while running:
         collide = cur_block.check_collide()
       
         if collide:
-            block_list = block_list[1:]         # Removes first block from block_list
-            deadsquares.add_block(cur_block)          # Adds the current block to the deadsquares list
-            collide = False
-
-        if not collide:
+            # TODO
+            print("collide")
+        else:
             cur_block.move_down()
         
 

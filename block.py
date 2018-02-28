@@ -51,11 +51,10 @@ class Square(pygame.sprite.Sprite):
 
 # Full block made up of 4 squares
 class Block:
-    squares = []
-    block_type = 0
 
-    def __init__(self, block_type, all_sprites):
+    def __init__(self, block_type):
         self.color = BLACK
+        self.squares = [0, 0, 0, 0]
         
         if block_type == SQUARE:
             self.color = YELLOW
@@ -124,12 +123,10 @@ class Block:
             self.square3.rect.left  += 20
             self.square4.rect.left  += 40
 
-        self.squares.append(self.square1) 
-        self.squares.append(self.square2) 
-        self.squares.append(self.square3) 
-        self.squares.append(self.square4) 
-
-        all_sprites.add(self.square1, self.square2, self.square3, self.square4)
+        self.squares[0] = self.square1
+        self.squares[1] = self.square2
+        self.squares[2] = self.square3
+        self.squares[3] = self.square4
 
 
 
@@ -138,6 +135,15 @@ class Block:
             return True
         else:
             return False
+
+    def set_next(self):
+        for square in self.squares:
+            square.rect.x += 100
+
+
+    def display(self, all_sprites):
+        for square in self.squares:
+            all_sprites.add(square)
     
     def move_down(self):
         if self.get_bottom() < BOARDBOT:
