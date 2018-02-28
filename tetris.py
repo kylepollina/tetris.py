@@ -179,10 +179,10 @@ while running:
     # Draws white outer box
     pygame.draw.rect(screen, WHITE, (BOARDLEFT - 2, BOARDTOP - 2, BOARDWIDTH + 4, BOARDHEIGHT + 4), 1)
     # Draws hold box
-    pygame.draw.rect(screen, WHITE, (BOARDRIGHT + 18, BOARDTOP - 2, 64, 84), 1)
+    pygame.draw.rect(screen, WHITE, (BOARDRIGHT + 18, BOARDTOP - 2, 74, 94), 1)
     all_sprites.draw(screen) 
     text, textrect = create_text('NEXT', WHITE, BLACK)
-    screen.blit(text, (BOARDRIGHT + 30, BOARDTOP - 20))
+    screen.blit(text, (BOARDRIGHT + 35, BOARDTOP - 20))
 
     # After drawing everything, flip the display
     pygame.display.flip()

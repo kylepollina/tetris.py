@@ -142,15 +142,17 @@ class Block:
             square.rect.x += BOARDWIDTH + 20 
 
             if self.block_type == LINE:
-                square.rect.x += 20
+                square.rect.x += 25
+                square.rect.y += 5
             elif self.block_type == SQUARE:
-                square.rect.x += 10
-                square.rect.y += 20
+                square.rect.x += 15
+                square.rect.y += 25
             elif self.block_type == TBLOCK:
-                square.rect.x += 10
-                square.rect.y += 10
+                square.rect.x += 15
+                square.rect.y += 15
             else:
-                square.rect.y += 20
+                square.rect.x += 5
+                square.rect.y += 25
 
 
 
