@@ -123,6 +123,8 @@ screen.fill(BLACK)
 all_sprites = pygame.sprite.Group()     # list of all currently displayed sprites
 
 cur_block = rand_block()
+cur_block.set_next()
+cur_block.set_current()
 cur_block.display(all_sprites)
 
 next_block = rand_block()
@@ -162,8 +164,12 @@ while running:
         collide = cur_block.check_collide()
       
         if collide:
-            # TODO
-            print("collide")
+            deadsquares.add_block(cur_block)
+            cur_block = next_block
+            cur_block.set_current()
+            next_block = rand_block()
+
+            collide = False
         else:
             cur_block.move_down()
         

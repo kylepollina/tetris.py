@@ -154,7 +154,22 @@ class Block:
                 square.rect.x += 5
                 square.rect.y += 25
 
+    def set_current(self):
+        for square in self.squares:
+            if self.block_type == LINE:
+                square.rect.x -= 25
+                square.rect.y -= 5
+            elif self.block_type == SQUARE:
+                square.rect.x -= 15
+                square.rect.y -= 25
+            elif self.block_type == TBLOCK:
+                square.rect.x -= 15
+                square.rect.y -= 15
+            else:
+                square.rect.x -= 5
+                square.rect.y -= 25
 
+            square.rect.x -= (BOARDWIDTH / 2) + 40
 
     def display(self, all_sprites):
         for square in self.squares:
