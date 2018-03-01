@@ -20,6 +20,10 @@ GAME_OVER = 0
 RUN = 1
 PAUSE = 2
 
+TESTSPEED   = 10
+NORMSPEED   = 20
+SLOWSPEED   = 30
+
 # Define colors
 WHITE  = (255,255,255)
 BLACK  = (0,0,0)
@@ -102,6 +106,23 @@ def create_text(text, color, background):
 def rand_block():
     return Block(random.randint(0,6))
 
+def can_move_left(cur_block, deadsquares):
+    for square in cur_block.squares:
+        for dead in deadsquares.deadsquare_list:
+            if square.rect.x - 20 == dead.rect.x and square.rect.y == dead.rect.y:
+                return False
+
+    return True
+
+def can_move_right(cur_block, deadsquares):
+    for square in cur_block.squares:
+        for dead in deadsquares.deadsquare_list:
+            if square.rect.x + 20 == dead.rect.x and square.rect.y == dead.rect.y:
+                return False
+
+    return True
+
+
 
 
 ##############################
@@ -136,7 +157,7 @@ deadsquares = Deadsquares()
 
 
 speed_timer = 0
-speed = 20
+speed = SLOWSPEED
 
 running = True
 while running:
@@ -151,17 +172,18 @@ while running:
     # Check key pressed
     if speed_timer % 3 == 0:
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_a]:
+        if keys[pygame.K_a] and can_move_left(cur_block, deadsquares):
            cur_block.move_left()
-        if keys[pygame.K_d]:
+        if keys[pygame.K_d] and can_move_right(cur_block, deadsquares):
             cur_block.move_right()
-
+        if keys[pygame.K_SPACE]:
+            cur_block.move_down()
 
 
 
     # Updates falling block
     if speed_timer % speed == 0:
-        collide = cur_block.check_collide()
+        collide = cur_block.check_collide(deadsquares)
       
         if collide:
             deadsquares.add_block(cur_block)

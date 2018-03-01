@@ -131,10 +131,15 @@ class Block:
 
 
 
-    def check_collide(self):
+    def check_collide(self, deadsquares):
         if self.get_bottom() >= BOARDBOT:
             return True
         else:
+            for square in self.squares:
+                for dead in deadsquares.deadsquare_list:
+                    if square.rect.y + 20 == dead.rect.y and square.rect.x == dead.rect.x:
+                        return True
+
             return False
 
     def set_next(self):
@@ -222,10 +227,10 @@ class Block:
 
 # All squares/blocks that have collided
 class Deadsquares:
-    block_list = []
+    deadsquare_list = []
 
     def add_block(self, block):
         for square in block.squares:
-            self.block_list.append(square)
+            self.deadsquare_list.append(square)
 
 
