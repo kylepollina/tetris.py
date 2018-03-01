@@ -168,6 +168,8 @@ while running:
             cur_block = next_block
             cur_block.set_current()
             next_block = rand_block()
+            next_block.set_next()
+            next_block.display(all_sprites)
 
             collide = False
         else:
