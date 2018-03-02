@@ -185,6 +185,11 @@ class Block:
             for square in self.squares:
                 square.rect.top += 20
 
+    def fast_move(self, deadsquares):
+        while not self.check_collide(deadsquares):
+            for square in self.squares:
+                square.rect.y += 20
+
     def move_left(self):
         if self.get_left() > BOARDLEFT:
             for square in self.squares:

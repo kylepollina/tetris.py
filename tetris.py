@@ -157,7 +157,7 @@ deadsquares = Deadsquares()
 
 
 speed_timer = 0
-speed = SLOWSPEED
+speed = NORMSPEED
 
 running = True
 while running:
@@ -176,8 +176,16 @@ while running:
            cur_block.move_left()
         if keys[pygame.K_d] and can_move_right(cur_block, deadsquares):
             cur_block.move_right()
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_s] and not cur_block.check_collide(deadsquares):
             cur_block.move_down()
+        if keys[pygame.K_SPACE]:
+            cur_block.fast_move(deadsquares)
+            deadsquares.add_block(cur_block)
+            cur_block = next_block
+            cur_block.set_current()
+            next_block = rand_block()
+            next_block.set_next()
+            next_block.display(all_sprites)
 
 
 
