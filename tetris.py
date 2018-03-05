@@ -2,6 +2,7 @@
 # Author: Kyle Pollina
 import pygame
 import random
+import copy
 from block import Block
 from block import Deadsquares
 
@@ -122,7 +123,23 @@ def can_move_right(cur_block, deadsquares):
 
     return True
 
+def can_rotate_right(cur_block, deadsquares):
+    temp_block = Block(cur_block.block_type)
 
+    temp_block.rotate_right()
+    if temp_block.check_collide:
+        return False
+    else:
+        return True
+
+def can_rotate_left(cur_block, deadsquares):
+    temp_block = Block(cur_block.block_type)
+
+    temp_block.rotate_left()
+    if temp_block.check_collide:
+        return False
+    else:
+        return True
 
 
 ##############################
@@ -163,30 +180,41 @@ running = True
 while running:
 
     # Process input (events)
-    for event in pygame.event.get():
+    events = pygame.event.get()
+    for event in events:
         # check for closing the window
         if event.type == pygame.QUIT:
             running = False
     
 
-    # Check key pressed
+    # Check key pressed. Will trigger speed_time / 3 times per loop if key held
+    keys = pygame.key.get_pressed()
     if speed_timer % 3 == 0:
-        keys = pygame.key.get_pressed()
         if keys[pygame.K_a] and can_move_left(cur_block, deadsquares):
            cur_block.move_left()
         if keys[pygame.K_d] and can_move_right(cur_block, deadsquares):
             cur_block.move_right()
         if keys[pygame.K_s] and not cur_block.check_collide(deadsquares):
             cur_block.move_down()
-        if keys[pygame.K_SPACE]:
-            cur_block.fast_move(deadsquares)
-            deadsquares.add_block(cur_block)
-            cur_block = next_block
-            cur_block.set_current()
-            next_block = rand_block()
-            next_block.set_next()
-            next_block.display(all_sprites)
+   
+    # Check key pressed down. Only executes once when key pressed down
+    for event in events:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_e and can_rotate_right(cur_block, deadsquares):
+                cur_block.rotate_right()
+            if event.key == pygame.K_q and can_rotate_left(cur_block, deadsquares):
+                cur_block.rotate_left()
 
+            if event.key == pygame.K_SPACE:
+                cur_block.fast_move(deadsquares)
+                deadsquares.add_block(cur_block)
+                cur_block = next_block
+                cur_block.set_current()
+                # next_block = rand_block()
+                next_block = Block(LINE)
+
+                next_block.set_next()
+                next_block.display(all_sprites)
 
 
     # Updates falling block
@@ -197,7 +225,9 @@ while running:
             deadsquares.add_block(cur_block)
             cur_block = next_block
             cur_block.set_current()
-            next_block = rand_block()
+            # next_block = rand_block()
+            next_block = Block(LINE)
+
             next_block.set_next()
             next_block.display(all_sprites)
 

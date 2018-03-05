@@ -22,6 +22,11 @@ BOARDRIGHT  = 15*20
 BOARDTOP    = 5*20
 BOARDBOT    = 25*20
 
+UP          = 0
+RIGHT       = 1
+DOWN        = 2
+LEFT        = 3
+
 # Define colors
 WHITE  = (255,255,255)
 BLACK  = (0,0,0)
@@ -56,6 +61,7 @@ class Block:
         self.color = BLACK
         self.squares = [0, 0, 0, 0]
         self.block_type = block_type
+        self.dir = UP
         
         if block_type == SQUARE:
             self.color = YELLOW
@@ -134,13 +140,89 @@ class Block:
     def check_collide(self, deadsquares):
         if self.get_bottom() >= BOARDBOT:
             return True
-        else:
-            for square in self.squares:
-                for dead in deadsquares.deadsquare_list:
-                    if square.rect.y + 20 == dead.rect.y and square.rect.x == dead.rect.x:
-                        return True
+            
+        for square in self.squares:
+            for dead in deadsquares.deadsquare_list:
+                if square.rect.y + 20 == dead.rect.y and square.rect.x == dead.rect.x:
+                    return True
 
-            return False
+        return False
+   
+    def rotate_right(self):
+        self.dir += 1
+        self.dir = self.dir % 4
+
+        if self.block_type == LINE:
+            if self.dir == UP:
+                self.squares[0].rect.x += 20
+                self.squares[0].rect.y -= 20
+                self.squares[2].rect.x -= 20
+                self.squares[2].rect.y += 20
+                self.squares[3].rect.x -= 40
+                self.squares[3].rect.y += 40
+            if self.dir == RIGHT:
+                self.squares[0].rect.x -= 20
+                self.squares[0].rect.y += 20
+                self.squares[2].rect.x += 20
+                self.squares[2].rect.y -= 20
+                self.squares[3].rect.x += 40
+                self.squares[3].rect.y -= 40
+            if self.dir == DOWN:
+                self.squares[0].rect.x += 20
+                self.squares[0].rect.y -= 20
+                self.squares[2].rect.x -= 20
+                self.squares[2].rect.y += 20
+                self.squares[3].rect.x -= 40
+                self.squares[3].rect.y += 40
+            if self.dir == LEFT:
+                self.squares[0].rect.x -= 20
+                self.squares[0].rect.y += 20
+                self.squares[2].rect.x += 20
+                self.squares[2].rect.y -= 20
+                self.squares[3].rect.x += 40
+                self.squares[3].rect.y -= 40
+
+
+            
+            
+            
+    def rotate_left(self):
+        self.dir -= 1
+        if self.dir == 0:
+            self.dir = 4
+        self.dir = self.dir % 4
+
+        if self.block_type == LINE:
+            if self.dir == UP:
+                self.squares[0].rect.x += 20
+                self.squares[0].rect.y -= 20
+                self.squares[2].rect.x -= 20
+                self.squares[2].rect.y += 20
+                self.squares[3].rect.x -= 40
+                self.squares[3].rect.y += 40
+            if self.dir == RIGHT:
+                self.squares[0].rect.x -= 20
+                self.squares[0].rect.y += 20
+                self.squares[2].rect.x += 20
+                self.squares[2].rect.y -= 20
+                self.squares[3].rect.x += 40
+                self.squares[3].rect.y -= 40
+            if self.dir == DOWN:
+                self.squares[0].rect.x += 20
+                self.squares[0].rect.y -= 20
+                self.squares[2].rect.x -= 20
+                self.squares[2].rect.y += 20
+                self.squares[3].rect.x -= 40
+                self.squares[3].rect.y += 40
+            if self.dir == LEFT:
+                self.squares[0].rect.x -= 20
+                self.squares[0].rect.y += 20
+                self.squares[2].rect.x += 20
+                self.squares[2].rect.y -= 20
+                self.squares[3].rect.x += 40
+                self.squares[3].rect.y -= 40
+
+
 
     def set_next(self):
         for square in self.squares:
