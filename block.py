@@ -152,7 +152,10 @@ class Block:
         self.dir += 1
         self.dir = self.dir % 4
 
-        if self.block_type == LINE:
+        temp_block = Block(self.block_type)
+
+        # Rotate temp block
+        if temp_block.block_type == LINE:
             if self.dir == UP:
                 self.squares[0].rect.x += 20
                 self.squares[0].rect.y -= 20
@@ -181,6 +184,10 @@ class Block:
                 self.squares[2].rect.y -= 20
                 self.squares[3].rect.x += 40
                 self.squares[3].rect.y -= 40
+
+
+
+            # Check if rotated temp block creates an overlap
 
 
             

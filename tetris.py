@@ -123,23 +123,6 @@ def can_move_right(cur_block, deadsquares):
 
     return True
 
-def can_rotate_right(cur_block, deadsquares):
-    temp_block = Block(cur_block.block_type)
-
-    temp_block.rotate_right()
-    if temp_block.check_collide:
-        return False
-    else:
-        return True
-
-def can_rotate_left(cur_block, deadsquares):
-    temp_block = Block(cur_block.block_type)
-
-    temp_block.rotate_left()
-    if temp_block.check_collide:
-        return False
-    else:
-        return True
 
 
 ##############################
@@ -200,10 +183,12 @@ while running:
     # Check key pressed down. Only executes once when key pressed down
     for event in events:
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_e and can_rotate_right(cur_block, deadsquares):
+            if event.key == pygame.K_e:
                 cur_block.rotate_right()
-            if event.key == pygame.K_q and can_rotate_left(cur_block, deadsquares):
-                cur_block.rotate_left()
+                print("rotate right")
+            if event.key == pygame.K_q:
+                # cur_block.rotate_left()
+                print("rotate left")
 
             if event.key == pygame.K_SPACE:
                 cur_block.fast_move(deadsquares)
