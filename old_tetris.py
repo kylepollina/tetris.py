@@ -8,7 +8,6 @@ from block import Block
 from block import Deadsquares
 from definitions import *
 
-
 ##############################
 # Game methods
 ##############################
