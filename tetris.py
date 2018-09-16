@@ -43,8 +43,7 @@ def draw():
     pygame.draw.rect(screen, WHITE, (BOARDLEFT - 2, BOARDTOP - 2, BOARDWIDTH + 4, BOARDHEIGHT + 4), 1)
     pygame.draw.rect(screen, WHITE, (BOARDRIGHT + 18, BOARDTOP - 2, 74, 94), 1)
     all_sprites.draw(screen) 
-    text, textrect = create_text('NEXT', WHITE, BLACK)
-    screen.blit(text, (BOARDRIGHT + 35, BOARDTOP - 20))
+    render_text('NEXT', WHITE, BLACK, BOARDRIGHT + 35, BOARDTOP - 20)
 
     # After drawing everything, flip the display
     pygame.display.flip()
@@ -68,9 +67,11 @@ def pygame_setup():
     all_sprites = pygame.sprite.Group()
 
  
-def create_text(text, color, background):
-    textsurface = font.render(text, True, color, background)
-    return textsurface, textsurface.get_rect()
+# render text on the screen
+def render_text(string, color, bgcolor, x, y):
+    textsurface = font.render(string, True, color, bgcolor)
+    screen.blit(textsurface, (x,y))
+
 
 
 ##############################
