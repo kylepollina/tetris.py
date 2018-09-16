@@ -1,5 +1,5 @@
-#"Tetris" Tetris game made with Pygame
-# Author: Kyle Pollina
+# block.py
+#  Block class for Tetris game. This class for individual block objects
 import pygame
 import random
 
