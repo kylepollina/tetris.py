@@ -2,19 +2,12 @@
 #  Classic tetris game written with Pythons Pygame Library
 #  Author: Kyle Pollina
 
+
 import pygame
 import random
+from board import Board
+from board import Block
 from definitions import *
-
-##############################
-# run() - code to execute the game
-#  run() is called way down at the bottom of the file
-##############################
-def run():
-    pygame_setup()
-    game_setup()
-    game_loop()
-    pygame.quit()
 
 
 ##############################
@@ -28,11 +21,18 @@ def game_loop():
     while running:
         # DO NOT EDIT
         clock.tick(FPS)     # keeps the game running at the right speed
-        process_input()
-        # update
-        draw()
+        process_input()     # processes user input
+        update()            # processes anything that needs to be updated every tick
+        draw()              # draws the screen
 
-        
+
+##############################
+# update() - this is the meat and potatoes of the games code
+#  if you want to update game pieces, do it here
+##############################
+def update():
+    # TODO remove dummy code
+    i = 0
 
 
 ##############################
@@ -48,32 +48,43 @@ def process_input():
             running = False
             
 
-
-##############################
-# draw() - draws objects on the screen. 
-#
-##############################
-def draw():
-    # DO NOT EDIT
-    pygame.display.flip()
-    
-    # EDIT HERE
-    screen.fill(BLACK)
-    pygame.draw.rect(screen, WHITE, (BOARDLEFT - 2, BOARDTOP - 2, BOARDWIDTH + 4, BOARDHEIGHT + 4), 1)
-    pygame.draw.rect(screen, WHITE, (BOARDRIGHT + 18, BOARDTOP - 2, 74, 94), 1)
-    render_text('NEXT', WHITE, BLACK, BOARDRIGHT + 35, BOARDTOP - 20)
-    all_sprites.draw(screen) 
-
-
-
 ##############################
 # game_setup() - setting up the actual game
 #
 ##############################
 def game_setup():
     global all_sprites  # list of all sprites currently existing
+    global board        # 2D board array 10x20
+    global cur_block    # current falling block
+    global next_block   # next block
+    global hold_block   # hold block
 
     all_sprites = pygame.sprite.Group()
+    board = Board(10, 20)
+    nextboard = Board(4, 4)
+    holdboard = Board(4, 4)
+    cur_block = rand_block()  
+
+    # board.print_array()
+
+# creates and returns a random block
+def rand_block():
+    return Block(random.randint(0,6))
+
+
+# ---------------------------------------
+
+##############################
+# run() - code to execute the game
+#  run() is called way down at the bottom of the file
+##############################
+def run():
+    pygame_setup()
+    game_setup()
+    game_loop()
+    pygame.quit()
+
+
 
 
 ##############################
@@ -94,17 +105,37 @@ def pygame_setup():
     font = pygame.font.SysFont(None, 20)
     clock = pygame.time.Clock()
 
+
+##############################
+# draw() - draws objects on the screen. 
+#
+##############################
+def draw():
+    # DO NOT EDIT
+    pygame.display.flip()
+    
+    # EDIT HERE
+    global board
+    global nextBlock
+
+    all_sprites.draw(screen) 
+    screen.fill(BLACK)
+    render_text('NEXT', WHITE, BLACK, BOARDRIGHT + 35, BOARDTOP - 20)
+    pygame.draw.rect(screen, WHITE, (BOARDLEFT - 2, BOARDTOP - 2, BOARDWIDTH + 2, BOARDHEIGHT + 2), 1)
+
+    # draws the board at the x, y coordinate
+    for col in range(board.width):
+        for row in range(board.height):
+            if board.array[row][col] == -1:
+                pygame.draw.rect(screen, WHITE, (BOARDLEFT + 20 * col, BOARDTOP + 20 * row, 18, 18), 1)
  
+
 ##############################
 # render_text() - render text on the screen
-#  string  - the string of the text you wish to render
-#  color   - the color of the font
-#  bgcolor - the background color of the text
-#  x - x coordinate
-#  y - y coordinate
+# 
 ##############################
-def render_text(string, color, bgcolor, x, y):
-    textsurface = font.render(string, True, color, bgcolor)
+def render_text(string, fontcolor, bgcolor, x, y):
+    textsurface = font.render(string, True, fontcolor, bgcolor)
     screen.blit(textsurface, (x,y))
 
 
